@@ -1,7 +1,6 @@
 from pages.BasePage import BasePage
 from locators.base_page_locators import Locator
 
-
 class Questions(BasePage):
 
     loc = Locator()
@@ -21,6 +20,7 @@ class Questions(BasePage):
     p_battery = loc.p_battery
     p_cancel = loc.p_cancel
     p_not_in_moscow = loc.p_not_in_moscow
+    logo_bike = loc.logo_bike
 
     def click_on_cost_question(self):
         self.driver.find_element(*self.div_cost).click()
@@ -69,3 +69,13 @@ class Questions(BasePage):
 
     def check_not_in_moscow_text(self):
         return self.driver.find_element(*self.p_not_in_moscow).text
+
+    def load_is_complete(self):
+        if self.driver.execute_script("return document.readyState;") != "complete":
+            return False
+        else:
+            return True
+
+    def hide_a_bike(self):
+        self.driver.execute_script("document.images[2].parentNode.style.visibility = 'hidden'")
+        self.driver.execute_script("document.images[3].parentNode.style.visibility = 'hidden'")
